@@ -1,0 +1,244 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+
+const navItems = [
+  { label: "About", action: "about" },
+  { label: "Expertise", href: "#services" },
+  { label: "Industries", href: "#industries" },
+  { label: "Partners", href: "#clients" }, // Renamed to match the Clients section
+];
+
+export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+
+  // Handle Scroll Effect for background
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [open]);
+
+  // Smooth Scroll Handler
+  const handleScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    e.preventDefault();
+    setOpen(false); // Close mobile menu if open
+    setActiveSection(href); // Move the yellow dot
+
+    const targetId = href.replace("#", "");
+    const elem: HTMLElement | null = document.getElementById(targetId);
+
+    if (elem) {
+      const offsetTop: number =
+        elem.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: offsetTop - 80, // -80px offset for the fixed header
+        behavior: "smooth",
+      });
+    } else {
+      // Fallback if ID not found (or if it's Home)
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  return (
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b
+        ${
+          scrolled
+            ? "bg-[#050505]/80 backdrop-blur-md border-white/5 py-4"
+            : "bg-transparent border-transparent py-6"
+        }
+      `}
+      >
+        <div className="mx-auto max-w-7xl px-6 flex items-center justify-between">
+          {/* 1. Logo (Scrolls to Top) */}
+          <a
+            href="#"
+            onClick={(e) => handleScroll(e, "#")}
+            className="relative z-50 group"
+          >
+            <Image
+              src="/brand/brazz2.svg"
+              alt="BrazzPR"
+              width={120}
+              height={40}
+              className="object-contain w-auto h-8 md:h-10 transition-opacity duration-300 group-hover:opacity-80"
+            />
+          </a>
+
+          {/* 2. Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-12">
+            {navItems.map((item) => {
+              if (item.action === "about") {
+                return (
+                  <button
+                    type="button"
+                    key={item.label}
+                    onClick={onOpenAbout}
+                    className="text-sm text-neutral-400 hover:text-white transition-colors text-left cursor-pointer"
+                  >
+                    <span className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 group-hover:text-white transition-colors">
+                      {item.label}
+                    </span>
+                  </button>
+                );
+              }
+              const isActive = activeSection === item.href;
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={(e) => handleScroll(e, item.href!)}
+                  className="relative group py-2"
+                >
+                  <span
+                    className={`text-xs font-bold uppercase tracking-[0.2em] transition-colors duration-300 ${
+                      isActive
+                        ? "text-white"
+                        : "text-neutral-400 group-hover:text-white"
+                    }`}
+                  >
+                    {item.label}
+                  </span>
+
+                  {/* The "Active" Yellow Dot */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="navDot"
+                      className="absolute -bottom-1 left-0 right-0 h-1 w-1 bg-yellow-500 rounded-full mx-auto"
+                    />
+                  )}
+                </a>
+              );
+            })}
+          </nav>
+
+          {/* 3. CTA & Mobile Toggle */}
+          <div className="flex items-center gap-6 z-50">
+            <a
+              href="#contact"
+              onClick={(e) => handleScroll(e, "#contact")}
+              className="hidden md:inline-flex items-center justify-center px-6 py-2.5 rounded-full border border-white/20 text-xs font-bold uppercase tracking-widest text-white hover:bg-white hover:text-black hover:border-white transition-all duration-300"
+            >
+              Get in Touch
+            </a>
+
+            <button
+              onClick={() => setOpen(!open)}
+              className="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 group"
+            >
+              <span
+                className={`w-6 h-0.5 bg-white transition-all duration-300 ${
+                  open ? "rotate-45 translate-y-2" : ""
+                }`}
+              />
+              <span
+                className={`w-6 h-0.5 bg-white transition-all duration-300 ${
+                  open ? "opacity-0" : ""
+                }`}
+              />
+              <span
+                className={`w-6 h-0.5 bg-white transition-all duration-300 ${
+                  open ? "-rotate-45 -translate-y-2" : ""
+                }`}
+              />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* 4. Cinematic Mobile Menu */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 bg-[#050505] z-40 flex flex-col justify-center px-6"
+          >
+            <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+
+            <nav className="flex flex-col gap-8 relative z-10">
+              {navItems.map((item, index) => (
+                <motion.div
+                  key={item.action || item.href}
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{
+                    delay: 0.1 + index * 0.1,
+                    duration: 0.5,
+                    ease: "easeOut",
+                  }}
+                >
+                  {item.action === "about" ? (
+                    <button
+                      onClick={() => {
+                        onOpenAbout();
+                        setOpen(false);
+                      }}
+                      className="group flex items-center gap-4"
+                    >
+                      <span className="text-xs font-mono text-neutral-600 group-hover:text-yellow-500 transition-colors">
+                        0{index + 1}
+                      </span>
+                      <span className="text-5xl font-serif text-white group-hover:italic transition-all">
+                        {item.label}
+                      </span>
+                    </button>
+                  ) : (
+                    <a
+                      href={item.href}
+                      onClick={(e) => handleScroll(e, item.href!)}
+                      className="group flex items-center gap-4"
+                    >
+                      <span className="text-xs font-mono text-neutral-600 group-hover:text-yellow-500 transition-colors">
+                        0{index + 1}
+                      </span>
+                      <span className="text-5xl font-serif text-white group-hover:italic transition-all">
+                        {item.label}
+                      </span>
+                    </a>
+                  )}
+                </motion.div>
+              ))}
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="mt-8 pt-8 border-t border-white/10"
+              >
+                <a
+                  href="#contact"
+                  onClick={(e) => handleScroll(e, "#contact")}
+                  className="text-xl text-neutral-400 hover:text-white transition-colors"
+                >
+                  Let&apos;s talk →
+                </a>
+              </motion.div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
