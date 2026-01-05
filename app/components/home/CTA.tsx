@@ -86,7 +86,7 @@ export default function CTA() {
               href="mailto:hello@brazzpr.com"
               className="text-2xl md:text-3xl font-serif italic text-white/40 hover:text-white transition-colors duration-300 border-b border-white/10 hover:border-white pb-1"
             >
-              support@brazzpr.com
+              support@brazzprandcomms.com
             </a>
           </motion.div>
         </div>
