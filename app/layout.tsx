@@ -28,10 +28,47 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "BrazzPR",
+  title: {
+    default: "BrazzPR",
+    template: "%s | BrazzPR",
+  },
   description: "Reaching Endless Possibilities with Marketing and PR.",
-  icons: "/brand/brazz.svg",
-  keywords: "BrazzPR, PR, Marketing, Advertising, Branding, Public Relations",
+  keywords: [
+    "BrazzPR",
+    "PR",
+    "Marketing",
+    "Advertising",
+    "Branding",
+    "Public Relations",
+  ],
+
+  icons: {
+    icon: "/brand/brazz.svg",
+  },
+
+  openGraph: {
+    title: "BrazzPR",
+    description: "Reaching Endless Possibilities with Marketing and PR.",
+    url: "https://brazzprandcomms.com",
+    siteName: "BrazzPR",
+    images: [
+      {
+        url: "/brazz.png",
+        width: 1200,
+        height: 630,
+        alt: "BrazzPR — Marketing & PR Agency",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "BrazzPR",
+    description: "Reaching Endless Possibilities with Marketing and PR.",
+    images: ["/og-image.jpg"],
+  },
 };
 
 export default function RootLayout({
