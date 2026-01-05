@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     siteName: "BrazzPR",
     images: [
       {
-        url: "/brazz.png",
+        url: "/brazz0.png",
         width: 1200,
         height: 630,
         alt: "BrazzPR — Marketing & PR Agency",
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "BrazzPR",
     description: "Reaching Endless Possibilities with Marketing and PR.",
-    images: ["/og-image.jpg"],
+    images: ["/brazz0.png"],
   },
 };
 
