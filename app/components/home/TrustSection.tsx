@@ -26,7 +26,7 @@ const stats = [
     label: "Success Rate",
     stat: "98",
     suffix: "%",
-    desc: "We don&apos;t miss.",
+    desc: "We don't miss.",
   },
 ];
 
