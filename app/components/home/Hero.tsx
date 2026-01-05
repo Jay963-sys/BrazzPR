@@ -23,28 +23,44 @@ export default function Hero() {
       setCurrentImageIndex((prevIndex) =>
         prevIndex === backgroundImages.length - 1 ? 0 : prevIndex + 1
       );
-    }, 4000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
+  useEffect(() => {
+    const next =
+      backgroundImages[(currentImageIndex + 1) % backgroundImages.length];
+    const img = new Image();
+    img.src = next;
+  }, [currentImageIndex]);
 
   return (
     <section className="relative h-screen w-full flex flex-col justify-center items-center overflow-hidden bg-[#050505]">
       {/* --- BACKGROUND LAYER --- */}
-      <div className="absolute inset-0 z-0">
-        <AnimatePresence mode="popLayout">
-          <motion.img
-            key={currentImageIndex}
-            src={backgroundImages[currentImageIndex]}
-            alt="Hero Background"
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        </AnimatePresence>
-        <div className="absolute inset-0 bg-black/40"></div>
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#050505] to-transparent"></div>
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <motion.div
+          className="absolute inset-0"
+          animate={{ scale: 1.08 }}
+          transition={{ duration: 40, ease: "linear" }}
+        >
+          <AnimatePresence initial={false}>
+            <motion.img
+              key={currentImageIndex}
+              src={backgroundImages[currentImageIndex]}
+              alt="Hero Background"
+              className="absolute inset-0 w-full h-full object-cover will-change-opacity"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{
+                opacity: { duration: 2.4, ease: "easeInOut" },
+              }}
+            />
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Overlays */}
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#050505] to-transparent" />
       </div>
 
       {/* --- CHEEKY / UNORTHODOX FLOATING ELEMENTS (Hidden on mobile) --- */}

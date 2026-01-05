@@ -157,7 +157,7 @@ export default function Footer({ onOpenAbout }: FooterProps) {
               <li>+234 809 854 6762</li>
               <li>+44 749 898 7137</li>
               <li className="pt-2 text-neutral-500 text-xs uppercase tracking-widest">
-                Lagos · Africa · Global
+                Lagos · London · Africa · Global
               </li>
             </ul>
           </div>
