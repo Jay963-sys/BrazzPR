@@ -84,7 +84,7 @@ export default function Hero() {
           className="absolute right-8 top-1/2 -translate-y-1/2 origin-right rotate-90"
         >
           <p className="text-white/40 text-sm uppercase tracking-[0.3em] font-bold whitespace-nowrap">
-            ( We don't do whispers )
+            ( We don&apos;t do whispers )
           </p>
         </motion.div>
 
@@ -114,9 +114,11 @@ export default function Hero() {
           className="mb-8 relative"
         >
           <span className="absolute right-full mr-4 top-1/2 w-12 h-[1px] bg-white/30 hidden md:block"></span>
+
           <span className="text-xs font-mono text-yellow-400 tracking-[0.2em] uppercase">
-            // Since 2018
+            {"// Since 2018"}
           </span>
+
           <span className="absolute left-full ml-4 top-1/2 w-12 h-[1px] bg-white/30 hidden md:block"></span>
         </motion.div>
 
@@ -184,7 +186,7 @@ export default function Hero() {
 
                 {/* Hover Text (Cheeky) */}
                 <span className="text-sm font-bold tracking-widest uppercase text-yellow-400 pt-1">
-                  Let's Make Noise
+                  Let&apos;s Make Noise
                 </span>
               </div>
             </div>
