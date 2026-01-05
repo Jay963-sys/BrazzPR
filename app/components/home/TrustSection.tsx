@@ -14,7 +14,7 @@ const stats = [
     label: "Global Cities",
     stat: "10",
     suffix: "+",
-    desc: "Lagos, London, New York.",
+    desc: "Lagos, London, Africa.",
   },
   {
     label: "VIP Clients",
