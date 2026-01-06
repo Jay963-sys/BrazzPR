@@ -60,6 +60,7 @@ const exploreLinks = [
   { name: "Industries", href: "#industries" },
   { name: "Partners", href: "#clients" },
   { name: "Contact", href: "#contact" },
+  { name: "Blog", href: "#blog" },
 ];
 
 interface FooterProps {
@@ -98,7 +99,7 @@ export default function Footer({ onOpenAbout }: FooterProps) {
                 className="inline-block mb-6"
               >
                 <span className="text-2xl font-serif font-bold tracking-tight">
-                  BrazzPR.
+                  BrazzPR and comms.
                 </span>
               </a>
               <p className="text-neutral-400 text-sm leading-relaxed max-w-sm">
@@ -148,17 +149,14 @@ export default function Footer({ onOpenAbout }: FooterProps) {
             <ul className="space-y-4 text-sm text-neutral-400">
               <li>
                 <a
-                  href="mailto:temibrazzmediahouse@gmail.com"
+                  href="mailto:hello@brazzprandcomms.com"
                   className="hover:text-white transition-colors"
                 >
-                  temibrazzmediahouse@gmail.com
+                  hello@brazzprandcomms.com
                 </a>
               </li>
               <li>+234 809 854 6762</li>
               <li>+44 749 898 7137</li>
-              <li className="pt-2 text-neutral-500 text-xs uppercase tracking-widest">
-                Lagos · London · Africa · Global
-              </li>
             </ul>
           </div>
 

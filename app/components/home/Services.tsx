@@ -12,30 +12,36 @@ const services = [
   },
   {
     id: "02",
+    title: "Experiential Marketing",
+    description:
+      "Immersive brand activations that create lasting emotional connections.",
+  },
+  {
+    id: "03",
+    title: "Event Production",
+    description:
+      "End-to-end management for launches, concerts, and corporate showcases.",
+  },
+  {
+    id: "04",
+    title: "Traditional Marketing",
+    description:
+      "High-impact Print, TV, radio, and OOH campaigns that drive mass awareness.",
+  },
+  {
+    id: "05",
     title: "Media Relations",
     description:
       "Strategic storytelling and placement to shape global perception.",
   },
   {
-    id: "03",
-    title: "Influencer Marketing",
-    description:
-      "Connecting brands with credible voices for high-impact campaigns.",
-  },
-  {
-    id: "04",
+    id: "06",
     title: "Digital & Content",
     description:
       "Data-driven creative content that engages, converts, and endures.",
   },
   {
-    id: "05",
-    title: "Executive Profiling",
-    description:
-      "Personal branding and reputation management for public figures.",
-  },
-  {
-    id: "06",
+    id: "07",
     title: "Brand Development",
     description:
       "Defining identity, positioning, and narrative for long-term relevance.",
@@ -46,15 +52,15 @@ export default function Services() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section id="services" className="bg-neutral-900 text-white py-32 px-6">
+    <section id="services" className="bg-white text-neutral-900 py-32 px-6">
       <div className="max-w-7xl mx-auto">
-        {/* Minimal Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 border-b border-white/10 pb-8">
-          <h2 className="text-4xl md:text-6xl font-light tracking-tight">
-            Our Expertise
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 border-b border-neutral-200 pb-8">
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-neutral-900">
+            OUR EXPERTISE
           </h2>
-          <p className="text-neutral-400 mt-4 md:mt-0 max-w-sm text-right">
-            Curated strategies for brands that demand attention.
+          <p className="text-neutral-500 mt-4 md:mt-0 max-w-sm text-right font-light">
+            Comprehensive solutions for brands that demand attention.
           </p>
         </div>
 
@@ -69,25 +75,25 @@ export default function Services() {
               transition={{ delay: index * 0.1 }}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
-              className="group relative border-b border-white/10 transition-colors duration-500 hover:border-white/40"
+              className="group relative border-b border-neutral-200 transition-colors duration-500 hover:border-red-600"
             >
-              <div className="py-12 flex flex-col md:flex-row items-baseline md:items-center justify-between gap-6 cursor-pointer">
+              <div className="py-10 flex flex-col md:flex-row items-baseline md:items-center justify-between gap-6 cursor-pointer">
                 {/* Left Side: ID & Title */}
                 <div className="flex items-baseline gap-8 md:gap-16">
                   <span
-                    className={`text-sm font-mono transition-colors duration-300 ${
+                    className={`text-sm font-bold font-mono transition-colors duration-300 ${
                       hoveredIndex === index
-                        ? "text-lime-400"
-                        : "text-neutral-600"
+                        ? "text-red-600"
+                        : "text-neutral-400"
                     }`}
                   >
                     /{service.id}
                   </span>
 
                   <h3
-                    className={`text-3xl md:text-5xl font-light tracking-tight transition-all duration-300 ${
+                    className={`text-3xl md:text-5xl font-medium tracking-tight transition-all duration-300 ${
                       hoveredIndex === index
-                        ? "translate-x-4 text-white"
+                        ? "translate-x-4 text-neutral-900"
                         : "text-neutral-400"
                     }`}
                   >
@@ -100,7 +106,7 @@ export default function Services() {
                   <p
                     className={`text-sm md:text-base leading-relaxed transition-all duration-300 ${
                       hoveredIndex === index
-                        ? "opacity-100 text-neutral-300"
+                        ? "opacity-100 text-neutral-600"
                         : "opacity-0 -translate-x-4"
                     }`}
                   >
@@ -115,8 +121,8 @@ export default function Services() {
                     }}
                     className={`text-2xl transition-colors duration-300 ${
                       hoveredIndex === index
-                        ? "text-lime-400"
-                        : "text-neutral-700"
+                        ? "text-red-600"
+                        : "text-neutral-300"
                     }`}
                   >
                     →

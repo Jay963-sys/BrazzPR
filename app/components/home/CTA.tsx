@@ -6,57 +6,53 @@ export default function CTA() {
   return (
     <section
       id="contact"
-      className="relative bg-[#050505] text-white py-32 md:py-48 overflow-hidden border-t border-white/10"
+      className="relative bg-white text-neutral-900 py-32 md:py-40 overflow-hidden"
     >
-      {/* Background Gradient Spot - Adds a subtle "stage light" effect */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-white/5 rounded-full blur-[120px] pointer-events-none" />
+      {/* Background Decoration (Subtle Red Glow) */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-600/5 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <div className="relative z-10 max-w-5xl mx-auto px-6">
         <div className="flex flex-col items-center text-center">
-          {/* 1. The Hook - Small & Sharp */}
+          {/* 1. The Hook */}
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-yellow-500 font-mono text-xs md:text-sm uppercase tracking-[0.3em] mb-6"
+            className="text-red-600 font-bold text-xs md:text-sm uppercase tracking-[0.3em] mb-8"
           >
-            What&apos;s Next?
+            Ready for the Spotlight?
           </motion.span>
 
-          {/* 2. The Headline - HUGE Editorial Serif */}
+          {/* 2. The Headline */}
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-6xl md:text-8xl lg:text-9xl font-serif leading-[0.9] tracking-tight"
+            className="text-6xl md:text-8xl lg:text-9xl font-black leading-[0.9] tracking-tighter mb-12"
           >
-            Ready to be <br />
-            <span className="italic text-neutral-500">Unforgettable?</span>
+            LET&apos;S MAKE YOUR <br />
+            BRAND <span className="text-red-600">LOUD.</span>
           </motion.h2>
 
-          {/* 4. The Giant Button - Minimalist Outline Style */}
+          {/* 3. The Action Buttons */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.6 }}
-            className="mt-16"
+            transition={{ delay: 0.4 }}
+            className="flex flex-col md:flex-row items-center gap-6 w-full justify-center mb-16"
           >
+            {/* CTA 1: Start Your Project (Email) */}
             <a
-              href="mailto:support@brazzpr.com"
-              className="group relative inline-flex items-center justify-center px-12 py-6 overflow-hidden rounded-full border border-white/20 hover:border-white transition-all duration-500"
+              href="mailto:hello@brazzprandcomms.com"
+              className="group relative inline-flex items-center justify-center px-10 py-5 overflow-hidden font-bold text-white transition-all duration-300 bg-red-600 hover:bg-red-700 min-w-[240px] shadow-lg shadow-red-600/30"
             >
-              {/* Button Hover Fill Effect */}
-              <div className="absolute inset-0 translate-y-full group-hover:translate-y-0 bg-white transition-transform duration-500 ease-in-out mix-blend-difference" />
-
-              <span className="relative z-10 text-xl font-light tracking-widest uppercase group-hover:text-black transition-colors duration-500">
-                Start the Conversation
+              <span className="relative uppercase tracking-widest text-sm">
+                Start Your Project
               </span>
-
-              {/* Arrow Icon */}
               <svg
-                className="relative z-10 ml-4 w-5 h-5 group-hover:text-black transition-colors duration-500 group-hover:translate-x-1 transform transition-transform"
+                className="w-4 h-4 ml-2 relative -mr-1 transition-all duration-300 group-hover:translate-x-2"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -64,30 +60,54 @@ export default function CTA() {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={1.5}
+                  strokeWidth="2"
                   d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
+                ></path>
               </svg>
+            </a>
+
+            {/* CTA 2: Book Strategy Call (Phone) */}
+            <a
+              href="tel:+2348098546762"
+              className="group relative inline-flex items-center justify-center px-10 py-5 overflow-hidden font-bold text-neutral-900 transition-all duration-300 bg-white border border-neutral-200 hover:border-red-600 min-w-[240px]"
+            >
+              <span className="relative uppercase tracking-widest text-sm group-hover:text-red-600 transition-colors">
+                Book a Strategy Call
+              </span>
             </a>
           </motion.div>
 
-          {/* 5. Direct Email Link (The "Luxury" touch) */}
+          {/* 4. Custom Plan & Explicit Email Display */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.8 }}
-            className="mt-16"
+            transition={{ delay: 0.6 }}
+            className="flex flex-col items-center gap-6"
           >
-            <p className="text-sm text-neutral-600 mb-2">
-              Or email us directly
-            </p>
+            {/* Custom Plan Link */}
             <a
-              href="mailto:hello@brazzpr.com"
-              className="text-2xl md:text-3xl font-serif italic text-white/40 hover:text-white transition-colors duration-300 border-b border-white/10 hover:border-white pb-1"
+              href="mailto:hello@brazzprandcomms.com?subject=Requesting%20Custom%20Plan"
+              className="text-sm font-medium text-neutral-500 uppercase tracking-wider hover:text-red-600 transition-colors"
             >
-              support@brazzprandcomms.com
+              Request a Custom PR & Marketing Plan
             </a>
+
+            {/* DIVIDER */}
+            <div className="w-12 h-[1px] bg-neutral-200"></div>
+
+            {/* EXPLICIT EMAIL DISPLAY */}
+            <div className="flex flex-col items-center">
+              <span className="text-xs text-neutral-400 mb-2">
+                Direct Email
+              </span>
+              <a
+                href="mailto:hello@brazzprandcomms.com"
+                className="text-xl md:text-3xl font-serif italic text-neutral-900 border-b border-transparent hover:border-red-600 hover:text-red-600 transition-all duration-300"
+              >
+                hello@brazzprandcomms.com
+              </a>
+            </div>
           </motion.div>
         </div>
       </div>

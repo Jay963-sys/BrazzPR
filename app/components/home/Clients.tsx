@@ -13,7 +13,7 @@ const logos = [
   "/clients/8.svg",
   "/clients/9.png",
   "/clients/10.jpeg",
-  "/clients/11.svg",
+  "/clients/10.svg",
   "/clients/12.svg",
   "/clients/13.png",
   "/clients/14.png",
@@ -40,52 +40,57 @@ export default function Clients() {
   return (
     <section
       id="clients"
-      className="bg-[#050505] text-white py-32 border-t border-white/5 overflow-hidden"
+      className="bg-white text-neutral-900 py-32 border-t border-neutral-200 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6 mb-20 text-center">
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="text-xs font-bold uppercase tracking-[0.2em] text-yellow-500 mb-4"
+          className="text-xs font-bold uppercase tracking-[0.2em] text-red-600 mb-4"
         >
           Trusted Partners
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="text-3xl md:text-5xl font-serif text-white max-w-2xl mx-auto"
+          className="text-4xl md:text-6xl font-bold tracking-tight text-neutral-900 max-w-2xl mx-auto"
         >
-          In Good <span className="italic text-neutral-500">Company.</span>
+          In Good{" "}
+          <span className="italic font-serif text-neutral-500">Company.</span>
         </motion.h2>
       </div>
 
-      {/* --- STATIC GRID SECTION (Replaces Marquee) --- */}
+      {/* --- LOGO GRID --- */}
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-8 gap-y-12 items-center justify-items-center">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-12 gap-y-16 items-center justify-items-center">
           {logos.map((logo, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.05, duration: 0.5 }} // Staggered fade-in
-              className="relative w-full h-12 md:h-16 flex items-center justify-center opacity-70 hover:opacity-100 hover:scale-105 transition-all duration-300 cursor-pointer"
+              transition={{ delay: index * 0.05, duration: 0.5 }}
+              className="relative w-full h-16 md:h-20 flex items-center justify-center group"
             >
+              {/* NOTE: 'grayscale' makes logos black/white. 
+                 'group-hover:grayscale-0' reveals color on hover. 
+                 Remove 'grayscale' if you want them always colored.
+              */}
               <Image
                 src={logo}
                 alt="Client Logo"
-                width={120}
-                height={60}
-                className="object-contain w-full h-full max-w-[120px]"
+                width={140}
+                height={80}
+                className="object-contain w-full h-full max-w-[140px] opacity-90  group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300 cursor-pointer"
               />
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Minimal Impact List */}
+      {/* --- IMPACT LIST --- */}
       <div className="max-w-7xl mx-auto px-6 mt-32">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 border-t border-white/10 pt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 border-t border-neutral-200 pt-12">
           {impacts.map((text, index) => (
             <motion.div
               key={index}
@@ -94,9 +99,9 @@ export default function Clients() {
               transition={{ delay: index * 0.1 }}
               className="group"
             >
-              {/* Little decorative dot */}
-              <div className="w-1.5 h-1.5 rounded-full bg-neutral-700 mb-4 group-hover:bg-yellow-500 transition-colors"></div>
-              <p className="text-neutral-400 text-sm font-medium leading-relaxed group-hover:text-white transition-colors">
+              {/* Decorative dot (Red on hover) */}
+              <div className="w-2 h-2 rounded-full bg-neutral-300 mb-4 group-hover:bg-red-600 transition-colors duration-300"></div>
+              <p className="text-neutral-600 text-sm font-medium leading-relaxed group-hover:text-neutral-900 transition-colors">
                 {text}
               </p>
             </motion.div>

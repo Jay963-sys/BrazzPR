@@ -8,7 +8,7 @@ const navItems = [
   { label: "About", action: "about" },
   { label: "Expertise", href: "#services" },
   { label: "Industries", href: "#industries" },
-  { label: "Partners", href: "#clients" }, // Renamed to match the Clients section
+  { label: "Partners", href: "#clients" },
 ];
 
 export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
@@ -39,7 +39,7 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
   ) => {
     e.preventDefault();
     setOpen(false); // Close mobile menu if open
-    setActiveSection(href); // Move the yellow dot
+    setActiveSection(href);
 
     const targetId = href.replace("#", "");
     const elem: HTMLElement | null = document.getElementById(targetId);
@@ -63,44 +63,49 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b
         ${
           scrolled
-            ? "bg-[#050505]/80 backdrop-blur-md border-white/5 py-4"
+            ? "bg-white/90 backdrop-blur-md border-neutral-200 py-4 shadow-sm"
             : "bg-transparent border-transparent py-6"
         }
       `}
       >
         <div className="mx-auto max-w-7xl px-6 flex items-center justify-between">
-          {/* 1. Logo (Scrolls to Top) */}
+          {/* 1. Logo */}
           <a
             href="#"
             onClick={(e) => handleScroll(e, "#")}
             className="relative z-50 group"
           >
+            {/* Ensure this logo image is dark/colored so it shows on white. 
+               If you have a white version, you might need conditional logic here based on scroll, 
+               but assuming you have a brand colored logo for the white background:
+            */}
             <Image
               src="/brand/brazz2.svg"
               alt="BrazzPR"
               width={120}
               height={40}
-              className="object-contain w-auto h-8 md:h-10 transition-opacity duration-300 group-hover:opacity-80"
+              className="object-contain w-auto h-8 md:h-10 transition-opacity duration-300 hover:opacity-80"
             />
           </a>
 
           {/* 2. Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-12">
+          <nav className="hidden md:flex items-center gap-10">
             {navItems.map((item) => {
+              // ABOUT ACTION
               if (item.action === "about") {
                 return (
                   <button
                     type="button"
                     key={item.label}
                     onClick={onOpenAbout}
-                    className="text-sm text-neutral-400 hover:text-white transition-colors text-left cursor-pointer"
+                    className="text-sm font-bold uppercase tracking-[0.1em] text-neutral-600 hover:text-red-600 transition-colors"
                   >
-                    <span className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 group-hover:text-white transition-colors">
-                      {item.label}
-                    </span>
+                    {item.label}
                   </button>
                 );
               }
+
+              // STANDARD LINKS
               const isActive = activeSection === item.href;
               return (
                 <a
@@ -110,20 +115,20 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
                   className="relative group py-2"
                 >
                   <span
-                    className={`text-xs font-bold uppercase tracking-[0.2em] transition-colors duration-300 ${
+                    className={`text-sm font-bold uppercase tracking-[0.1em] transition-colors duration-300 ${
                       isActive
-                        ? "text-white"
-                        : "text-neutral-400 group-hover:text-white"
+                        ? "text-red-600"
+                        : "text-neutral-600 group-hover:text-red-600"
                     }`}
                   >
                     {item.label}
                   </span>
 
-                  {/* The "Active" Yellow Dot */}
+                  {/* The "Active" Red Dot */}
                   {isActive && (
                     <motion.div
                       layoutId="navDot"
-                      className="absolute -bottom-1 left-0 right-0 h-1 w-1 bg-yellow-500 rounded-full mx-auto"
+                      className="absolute -bottom-1 left-0 right-0 h-1 w-1 bg-red-600 rounded-full mx-auto"
                     />
                   )}
                 </a>
@@ -136,28 +141,29 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
             <a
               href="#contact"
               onClick={(e) => handleScroll(e, "#contact")}
-              className="hidden md:inline-flex items-center justify-center px-6 py-2.5 rounded-full border border-white/20 text-xs font-bold uppercase tracking-widest text-white hover:bg-white hover:text-black hover:border-white transition-all duration-300"
+              className="hidden md:inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-red-600 text-xs font-bold uppercase tracking-widest text-white hover:bg-red-700 transition-all duration-300 shadow-md shadow-red-600/20"
             >
-              Get in Touch
+              Contact Us
             </a>
 
+            {/* Mobile Hamburger (Dark color for white background) */}
             <button
               onClick={() => setOpen(!open)}
               className="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 group"
             >
               <span
-                className={`w-6 h-0.5 bg-white transition-all duration-300 ${
-                  open ? "rotate-45 translate-y-2" : ""
+                className={`w-6 h-0.5 bg-neutral-900 transition-all duration-300 ${
+                  open ? "rotate-45 translate-y-2 bg-red-600" : ""
                 }`}
               />
               <span
-                className={`w-6 h-0.5 bg-white transition-all duration-300 ${
+                className={`w-6 h-0.5 bg-neutral-900 transition-all duration-300 ${
                   open ? "opacity-0" : ""
                 }`}
               />
               <span
-                className={`w-6 h-0.5 bg-white transition-all duration-300 ${
-                  open ? "-rotate-45 -translate-y-2" : ""
+                className={`w-6 h-0.5 bg-neutral-900 transition-all duration-300 ${
+                  open ? "-rotate-45 -translate-y-2 bg-red-600" : ""
                 }`}
               />
             </button>
@@ -165,7 +171,7 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
         </div>
       </header>
 
-      {/* 4. Cinematic Mobile Menu */}
+      {/* 4. Editorial White Mobile Menu */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -173,11 +179,11 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="fixed inset-0 bg-[#050505] z-40 flex flex-col justify-center px-6"
+            className="fixed inset-0 bg-white z-40 flex flex-col justify-center px-6"
           >
-            <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+            {/* Subtle background texture or gradient can go here if needed */}
 
-            <nav className="flex flex-col gap-8 relative z-10">
+            <nav className="flex flex-col gap-6 relative z-10">
               {navItems.map((item, index) => (
                 <motion.div
                   key={item.action || item.href}
@@ -195,12 +201,12 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
                         onOpenAbout();
                         setOpen(false);
                       }}
-                      className="group flex items-center gap-4"
+                      className="group flex items-baseline gap-4 w-full text-left"
                     >
-                      <span className="text-xs font-mono text-neutral-600 group-hover:text-yellow-500 transition-colors">
+                      <span className="text-xs font-bold font-mono text-red-600">
                         0{index + 1}
                       </span>
-                      <span className="text-5xl font-serif text-white group-hover:italic transition-all">
+                      <span className="text-5xl font-serif font-medium text-neutral-900 group-hover:text-red-600 group-hover:italic transition-all">
                         {item.label}
                       </span>
                     </button>
@@ -208,12 +214,12 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
                     <a
                       href={item.href}
                       onClick={(e) => handleScroll(e, item.href!)}
-                      className="group flex items-center gap-4"
+                      className="group flex items-baseline gap-4"
                     >
-                      <span className="text-xs font-mono text-neutral-600 group-hover:text-yellow-500 transition-colors">
+                      <span className="text-xs font-bold font-mono text-red-600">
                         0{index + 1}
                       </span>
-                      <span className="text-5xl font-serif text-white group-hover:italic transition-all">
+                      <span className="text-5xl font-serif font-medium text-neutral-900 group-hover:text-red-600 group-hover:italic transition-all">
                         {item.label}
                       </span>
                     </a>
@@ -225,14 +231,14 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="mt-8 pt-8 border-t border-white/10"
+                className="mt-8 pt-8 border-t border-neutral-200"
               >
                 <a
                   href="#contact"
                   onClick={(e) => handleScroll(e, "#contact")}
-                  className="text-xl text-neutral-400 hover:text-white transition-colors"
+                  className="text-xl font-medium text-neutral-500 hover:text-red-600 transition-colors flex items-center gap-2"
                 >
-                  Let&apos;s talk →
+                  Contact Us <span className="text-red-600">→</span>
                 </a>
               </motion.div>
             </nav>

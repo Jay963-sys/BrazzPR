@@ -14,8 +14,6 @@ export default function AboutOverlay({ isOpen, onClose }: AboutOverlayProps) {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     }
-
-    // Cleanup function
     return () => {
       document.body.style.overflow = "unset";
     };
@@ -62,18 +60,18 @@ export default function AboutOverlay({ isOpen, onClose }: AboutOverlayProps) {
       animate={{ y: 0 }}
       exit={{ y: "100%" }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-0 z-[100] bg-[#0E0E10] text-white overflow-y-auto"
+      className="fixed inset-0 z-[100] bg-white text-neutral-900 overflow-y-auto"
     >
       {/* CLOSE BUTTON */}
       <button
         type="button"
         onClick={onClose}
-        className="fixed top-8 right-8 z-50 group flex items-center gap-2 mix-blend-difference cursor-pointer"
+        className="fixed top-8 right-8 z-50 group flex items-center gap-3 cursor-pointer"
       >
-        <span className="text-xs font-bold uppercase tracking-widest group-hover:text-yellow-500 transition-colors">
+        <span className="text-xs font-bold uppercase tracking-widest text-neutral-500 group-hover:text-red-600 transition-colors">
           Close
         </span>
-        <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+        <div className="w-10 h-10 rounded-full border border-neutral-300 flex items-center justify-center group-hover:border-red-600 group-hover:bg-red-600 group-hover:text-white transition-all duration-300">
           <svg
             className="w-4 h-4"
             fill="none"
@@ -98,14 +96,14 @@ export default function AboutOverlay({ isOpen, onClose }: AboutOverlayProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <span className="inline-block px-3 py-1 rounded-full border border-yellow-500/30 text-yellow-500 text-xs font-mono uppercase tracking-widest mb-6">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-red-50 text-red-600 text-xs font-bold uppercase tracking-widest mb-8">
               Who We Are
             </span>
-            <h2 className="text-5xl md:text-7xl font-serif leading-tight mb-8">
+            <h2 className="text-5xl md:text-7xl font-bold font-serif leading-tight mb-8 text-neutral-900">
               We don&apos;t do <br />
-              <span className="italic text-neutral-500">vanilla.</span>
+              <span className="italic text-red-600">vanilla.</span>
             </h2>
-            <p className="text-lg md:text-xl text-neutral-300 leading-relaxed font-light">
+            <p className="text-lg md:text-xl text-neutral-600 leading-relaxed font-light max-w-2xl mx-auto">
               BrazzPR is Africa&apos;s leading strategic marketing and creative
               PR communications agency. We bridge the gap between brands and
               their audiences through impactful storytelling and strategic
@@ -115,21 +113,21 @@ export default function AboutOverlay({ isOpen, onClose }: AboutOverlayProps) {
         </div>
 
         {/* --- MISSION & VISION GRID --- */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-stretch mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-stretch mb-32">
           {/* VISION */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
-            className="relative border border-white/10 p-10 rounded-3xl bg-white/[0.02]"
+            className="relative border border-neutral-200 p-10 md:p-12 bg-neutral-50/50 hover:bg-white hover:shadow-xl hover:shadow-neutral-200/50 transition-all duration-500"
           >
-            <h3 className="text-3xl font-serif italic mb-6 text-white">
+            <h3 className="text-3xl font-serif italic mb-6 text-neutral-900">
               The Vision
             </h3>
-            <p className="text-neutral-300 leading-relaxed font-light text-lg mb-6">
+            <p className="text-neutral-700 leading-relaxed font-medium text-lg mb-8">
               To be the most trusted and innovative 360 marketing & PR agency.
             </p>
-            <p className="text-neutral-400 leading-relaxed font-light text-sm border-t border-white/10 pt-6">
+            <p className="text-neutral-500 leading-relaxed font-light text-sm border-t border-neutral-200 pt-6">
               Transforming communications and setting new standards of
               excellence globally by blending African roots with world-class
               strategy.
@@ -138,19 +136,19 @@ export default function AboutOverlay({ isOpen, onClose }: AboutOverlayProps) {
 
           {/* MISSION */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5 }}
-            className="relative border border-white/10 p-10 rounded-3xl bg-white/[0.02]"
+            className="relative border border-neutral-200 p-10 md:p-12 bg-neutral-50/50 hover:bg-white hover:shadow-xl hover:shadow-neutral-200/50 transition-all duration-500"
           >
-            <h3 className="text-3xl font-serif italic mb-6 text-white">
+            <h3 className="text-3xl font-serif italic mb-6 text-neutral-900">
               The Mission
             </h3>
-            <p className="text-neutral-300 leading-relaxed font-light text-lg mb-6">
+            <p className="text-neutral-700 leading-relaxed font-medium text-lg mb-8">
               To empower industry leaders and brands through innovative
               strategies.
             </p>
-            <p className="text-neutral-400 leading-relaxed font-light text-sm border-t border-white/10 pt-6">
+            <p className="text-neutral-500 leading-relaxed font-light text-sm border-t border-neutral-200 pt-6">
               Building lasting relationships and delivering excellence with
               integrity, ensuring every client resonates authentically with
               their audience.
@@ -163,7 +161,7 @@ export default function AboutOverlay({ isOpen, onClose }: AboutOverlayProps) {
           <motion.h3
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="text-center text-xs font-bold uppercase tracking-[0.3em] text-yellow-500 mb-16"
+            className="text-center text-xs font-bold uppercase tracking-[0.3em] text-red-600 mb-16"
           >
             Core Values
           </motion.h3>
@@ -175,15 +173,15 @@ export default function AboutOverlay({ isOpen, onClose }: AboutOverlayProps) {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="group p-8 border-l border-white/20 hover:border-yellow-500 hover:bg-white/[0.02] transition-colors duration-500"
+                className="group p-8 border-l border-neutral-200 hover:border-red-600 hover:bg-neutral-50 transition-colors duration-500"
               >
-                <span className="text-4xl font-black text-white/10 group-hover:text-yellow-500/50 transition-colors block mb-6">
+                <span className="text-5xl font-black text-neutral-100 group-hover:text-red-600/10 transition-colors block mb-6">
                   {item.id}
                 </span>
-                <h4 className="text-xl font-bold uppercase tracking-wider mb-4">
+                <h4 className="text-xl font-bold uppercase tracking-wider mb-4 text-neutral-900">
                   {item.title}
                 </h4>
-                <p className="text-neutral-400 text-sm leading-relaxed">
+                <p className="text-neutral-600 text-sm leading-relaxed">
                   {item.desc}
                 </p>
               </motion.div>
@@ -192,7 +190,7 @@ export default function AboutOverlay({ isOpen, onClose }: AboutOverlayProps) {
         </div>
 
         {/* --- THE BRAZZ FACTOR (Expertise) --- */}
-        <div className="border-t border-white/10 pt-20 mb-20">
+        <div className="border-t border-neutral-200 pt-20 mb-20">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
             {pillars.map((pillar, index) => (
               <motion.div
@@ -201,7 +199,7 @@ export default function AboutOverlay({ isOpen, onClose }: AboutOverlayProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 + index * 0.1 }}
               >
-                <h4 className="text-lg font-bold text-white mb-3">
+                <h4 className="text-lg font-bold text-neutral-900 mb-3">
                   {pillar.title}
                 </h4>
                 <p className="text-neutral-500 text-sm leading-relaxed">
@@ -212,36 +210,12 @@ export default function AboutOverlay({ isOpen, onClose }: AboutOverlayProps) {
           </div>
         </div>
 
-        {/* 
-        <div className="mt-20">
-          <p className="text-center text-xs font-mono uppercase tracking-widest text-neutral-500 mb-8">
-            The Squad
-          </p>
-          <div className="flex gap-4 overflow-hidden opacity-50 hover:opacity-100 transition-opacity duration-500">
-        
-            {[1, 2, 3, 4].map((i) => (
-              <div
-                key={i}
-                className="w-full h-64 bg-neutral-800 relative group"
-              >
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all" />
-                <Image
-                  src="/brand/12.jpg"
-                  alt="Client"
-                  width={120}
-                  height={120}
-                />
-              </div>
-            ))}
-          </div>
-        </div> */}
-
         {/* --- FOOTER ACTION --- */}
-        <div className="mt-20 text-center border-t border-white/10 pt-8">
-          <p className="text-neutral-500">Seen enough?</p>
+        <div className="mt-20 text-center border-t border-neutral-200 pt-8">
+          <p className="text-neutral-400 text-sm mb-2">Seen enough?</p>
           <button
             onClick={onClose}
-            className="mt-4 text-yellow-500 border-b border-yellow-500 pb-1 hover:text-white hover:border-white transition-all"
+            className="text-lg font-serif italic text-neutral-900 border-b border-transparent hover:border-red-600 hover:text-red-600 transition-all duration-300"
           >
             Go back to homepage
           </button>
