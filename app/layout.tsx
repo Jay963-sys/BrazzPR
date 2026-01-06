@@ -29,7 +29,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "BrazzPR",
+    default:
+      "BrazzPR and Comms | Public Relations & 360 Marketing Agency in Nigeria",
     template: "%s | BrazzPR",
   },
   description: "Reaching Endless Possibilities with Marketing and PR.",
