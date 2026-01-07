@@ -20,7 +20,6 @@ interface Post {
   excerpt: string;
 }
 
-// Fetch data
 async function getPosts(): Promise<Post[]> {
   const query = `*[_type == "post"] | order(publishedAt desc) {
     title,
