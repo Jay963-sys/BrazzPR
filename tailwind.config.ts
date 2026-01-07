@@ -23,6 +23,7 @@ const config: Config = {
       mona: ["Mona Sans", "sans-serif"],
     },
   },
+  plugins: [require("@tailwindcss/typography")],
 };
 
 export default config;

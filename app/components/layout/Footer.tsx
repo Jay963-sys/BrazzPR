@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 const socialLinks = [
   {
@@ -60,7 +61,7 @@ const exploreLinks = [
   { name: "Industries", href: "#industries" },
   { name: "Partners", href: "#clients" },
   { name: "Contact", href: "#contact" },
-  { name: "Blog", href: "#blog" },
+  { name: "Blog", href: "/blog" },
 ];
 
 interface FooterProps {
@@ -117,8 +118,8 @@ export default function Footer({ onOpenAbout }: FooterProps) {
             <ul className="space-y-4">
               {exploreLinks.map((item) => (
                 <li key={item.name}>
+                  {/* ABOUT (modal / custom action) */}
                   {item.action === "about" ? (
-                    // IF ACTION IS ABOUT: Use Button with onOpenAbout
                     <button
                       type="button"
                       onClick={onOpenAbout}
@@ -126,8 +127,16 @@ export default function Footer({ onOpenAbout }: FooterProps) {
                     >
                       {item.name}
                     </button>
+                  ) : item.href?.startsWith("/") ? (
+                    /* PAGE NAVIGATION (Blog) */
+                    <Link
+                      href={item.href}
+                      className="text-sm text-neutral-400 hover:text-white transition-colors"
+                    >
+                      {item.name}
+                    </Link>
                   ) : (
-                    // ELSE: Use Anchor with Smooth Scroll
+                    /* HASH SCROLL */
                     <a
                       href={item.href}
                       onClick={(e) => handleScroll(e, item.href!)}
