@@ -29,8 +29,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default:
-      "BrazzPR and Comms | Public Relations & 360 Marketing Agency in Nigeria",
+    default: "BrazzPR – 360 Strategic Marketing and PR Agency",
     template: "%s | BrazzPR",
   },
   description: "Reaching Endless Possibilities with Marketing and PR.",
@@ -48,7 +47,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    title: "BrazzPR",
+    title: "BrazzPR – 360 Strategic Marketing and PR Agency",
     description: "Reaching Endless Possibilities with Marketing and PR.",
     url: "https://brazzprandcomms.com",
     siteName: "BrazzPR",
@@ -66,7 +65,7 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "BrazzPR",
+    title: "BrazzPR – 360 Strategic Marketing and PR Agency",
     description: "Reaching Endless Possibilities with Marketing and PR.",
     images: ["/brazz0.png"],
   },

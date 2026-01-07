@@ -54,7 +54,6 @@ const socialLinks = [
   },
 ];
 
-// Updated Link Array: 'About' uses 'action' instead of 'href'
 const exploreLinks = [
   { name: "About", action: "about" },
   { name: "Expertise", href: "#services" },
@@ -193,13 +192,32 @@ export default function Footer({ onOpenAbout }: FooterProps) {
         {/* Bottom Section */}
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-600">
           <p>© {new Date().getFullYear()} BrazzPR. All rights reserved.</p>
-          <div className="flex gap-6">
+          <div className="flex items-center gap-6">
             <a href="#" className="hover:text-neutral-400 transition-colors">
               Privacy Policy
             </a>
             <a href="#" className="hover:text-neutral-400 transition-colors">
               Terms of Service
             </a>
+            {/* The Dot Separator */}
+            <div className="w-1 h-1 rounded-full bg-neutral-800" />
+            {/* JAY'S CREDIT */}
+            <Link
+              href="https://jay-dev-portfolio.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+    font-medium
+    underline
+    underline-offset-4
+    decoration-neutral-600
+    hover:decoration-white
+    hover:text-white
+    transition-colors
+  "
+            >
+              Designed by Jay
+            </Link>
           </div>
         </div>
       </div>
