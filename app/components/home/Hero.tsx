@@ -47,8 +47,6 @@ export default function Hero() {
   }, []);
 
   return (
-    // FIX 1: Changed h-screen to min-h-screen (or min-h-[100dvh])
-    // This allows the section to stretch if content is too tall on mobile
     <section className="relative min-h-[100dvh] w-full flex flex-col justify-center items-center overflow-hidden bg-white">
       {/* --- BACKGROUND LAYER --- */}
       <div className="absolute inset-0 z-0 overflow-hidden opacity-30">
@@ -102,7 +100,6 @@ export default function Hero() {
       </motion.div>
 
       {/* --- CONTENT LAYER --- */}
-      {/* FIX 2: Added py-32 md:py-0 to ensure top text isn't cut off by navbar on mobile */}
       <div className="relative z-20 w-full max-w-7xl mx-auto px-6 text-center flex flex-col items-center py-32 md:py-0">
         {/* 1. Tagline */}
         <motion.div
@@ -112,7 +109,7 @@ export default function Hero() {
           className="mb-6 relative flex items-center gap-4"
         >
           <span className="h-[1px] w-8 bg-red-600 hidden md:block"></span>
-          <span className="text-xs font-bold text-red-600 tracking-[0.25em] uppercase">
+          <span className="text-[10px] md:text-xs font-bold text-red-600 tracking-[0.25em] uppercase">
             Since 2018
           </span>
           <span className="h-[1px] w-8 bg-red-600 hidden md:block"></span>
@@ -124,15 +121,18 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            // FIX 3: Adjusted font size to start at text-4xl on mobile to save space
-            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-sans font-black tracking-tighter text-neutral-900 leading-[1.1] md:leading-[0.95]"
+            // SCALED DOWN SIZES:
+            // Mobile: text-3xl
+            // Tablet: text-5xl
+            // Desktop: text-7xl (was 8xl/9xl)
+            className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-sans font-black tracking-tighter text-neutral-900 leading-[1.1] md:leading-[0.95]"
           >
             WE DON&apos;T DO QUIET. <br />
             WE MAKE BRANDS <br />
             <span className="text-red-600 relative inline-block mt-1 md:mt-2">
               IMPOSSIBLE TO IGNORE
               <svg
-                className="absolute w-full h-3 -bottom-2 left-0 text-red-200"
+                className="absolute w-full h-2 md:h-3 -bottom-1 md:-bottom-2 left-0 text-red-200"
                 viewBox="0 0 100 10"
                 preserveAspectRatio="none"
               >
@@ -153,7 +153,10 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-base md:text-xl text-neutral-600 max-w-3xl font-light leading-relaxed mb-8"
+          // SCALED DOWN SIZES:
+          // Mobile: text-sm
+          // Desktop: text-lg (was xl)
+          className="text-sm md:text-lg text-neutral-600 max-w-2xl font-light leading-relaxed mb-8"
         >
           Strategic PR, 360° marketing, and creative communications that cut
           through the noise and put your brand exactly where it belongs: in the
@@ -174,11 +177,13 @@ export default function Hero() {
               <p className="text-[10px] font-bold tracking-widest text-neutral-400 uppercase mb-2">
                 Case Studies That Speak Louder Than Words
               </p>
-              {/* Responsive Text Size for Highlights */}
-              <h3 className="text-xl md:text-3xl font-bold text-red-600 mb-1">
+
+              {/* Highlight Text Scaled Down (text-lg md:text-2xl) */}
+              <h3 className="text-lg md:text-2xl font-bold text-red-600 mb-1">
                 {caseStudies[currentCaseIndex].highlight}
               </h3>
-              <p className="text-xs md:text-sm text-neutral-600 font-medium px-4 md:px-0">
+
+              <p className="text-xs text-neutral-600 font-medium px-4 md:px-0">
                 <span className="text-neutral-900 mr-2 block md:inline">
                   {caseStudies[currentCaseIndex].category}
                 </span>
@@ -196,7 +201,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-col items-center gap-4 pb-12 md:pb-0" // Extra padding bottom for mobile scroll
+          className="flex flex-col items-center gap-4 pb-12 md:pb-0"
         >
           <div className="flex flex-col md:flex-row items-center gap-6">
             <a

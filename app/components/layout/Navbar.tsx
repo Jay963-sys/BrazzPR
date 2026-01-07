@@ -75,10 +75,6 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
             onClick={(e) => handleScroll(e, "#")}
             className="relative z-50 group"
           >
-            {/* Ensure this logo image is dark/colored so it shows on white. 
-               If you have a white version, you might need conditional logic here based on scroll, 
-               but assuming you have a brand colored logo for the white background:
-            */}
             <Image
               src="/brand/brazz2.svg"
               alt="BrazzPR"
@@ -138,6 +134,7 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
 
           {/* 3. CTA & Mobile Toggle */}
           <div className="flex items-center gap-6 z-50">
+            {/* Contact Button */}
             <a
               href="#contact"
               onClick={(e) => handleScroll(e, "#contact")}
@@ -146,7 +143,15 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
               Contact Us
             </a>
 
-            {/* Mobile Hamburger (Dark color for white background) */}
+            {/* Blog Link - Added Just After Contact Button */}
+            <a
+              href="/blog"
+              className="hidden md:inline-block text-xs font-bold uppercase tracking-widest text-neutral-900 hover:text-red-600 transition-colors"
+            >
+              Blog
+            </a>
+
+            {/* Mobile Hamburger */}
             <button
               onClick={() => setOpen(!open)}
               className="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 group"
@@ -231,7 +236,7 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="mt-8 pt-8 border-t border-neutral-200"
+                className="mt-8 pt-8 border-t border-neutral-200 flex flex-col gap-4"
               >
                 <a
                   href="#contact"
@@ -239,6 +244,14 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
                   className="text-xl font-medium text-neutral-500 hover:text-red-600 transition-colors flex items-center gap-2"
                 >
                   Contact Us <span className="text-red-600">→</span>
+                </a>
+
+                {/* Mobile Blog Link */}
+                <a
+                  href="/blog"
+                  className="text-xl font-medium text-neutral-500 hover:text-red-600 transition-colors flex items-center gap-2"
+                >
+                  Read our Blog <span className="text-red-600">→</span>
                 </a>
               </motion.div>
             </nav>
