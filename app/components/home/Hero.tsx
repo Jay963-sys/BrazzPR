@@ -6,27 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 // 1. YOUR IMAGES
 const backgroundImages = ["/brand/1.jpg", "/brand/2.jpg"];
 
-// 2. CASE STUDIES DATA
-const caseStudies = [
-  {
-    id: 1,
-    category: "Tech Startup Visibility Campaign",
-    highlight: "$75,000 Raised",
-    description:
-      "Secured national media attention and investor trust for Wrkman.",
-  },
-  {
-    id: 2,
-    category: "Entertainment Brand Growth",
-    highlight: "+40% Audience Growth",
-    description:
-      "Executed a viral 360° marketing strategy for major industry players.",
-  },
-];
-
 export default function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [currentCaseIndex, setCurrentCaseIndex] = useState(0);
 
   // Cycle background images every 5 seconds
   useEffect(() => {
@@ -35,14 +16,6 @@ export default function Hero() {
         prevIndex === backgroundImages.length - 1 ? 0 : prevIndex + 1
       );
     }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Cycle Case Studies every 6 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentCaseIndex((prev) => (prev + 1) % caseStudies.length);
-    }, 6000);
     return () => clearInterval(interval);
   }, []);
 
@@ -100,7 +73,8 @@ export default function Hero() {
       </motion.div>
 
       {/* --- CONTENT LAYER --- */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 text-center flex flex-col items-center py-32 md:py-0">
+      {/* Added pt-32 to ensure content never overlaps with the fixed Navbar */}
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 text-center flex flex-col items-center pt-32 pb-20">
         {/* 1. Tagline */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -121,10 +95,6 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            // SCALED DOWN SIZES:
-            // Mobile: text-3xl
-            // Tablet: text-5xl
-            // Desktop: text-7xl (was 8xl/9xl)
             className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-sans font-black tracking-tighter text-neutral-900 leading-[1.1] md:leading-[0.95]"
           >
             WE DON&apos;T DO QUIET. <br />
@@ -153,55 +123,19 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          // SCALED DOWN SIZES:
-          // Mobile: text-sm
-          // Desktop: text-lg (was xl)
-          className="text-sm md:text-lg text-neutral-600 max-w-2xl font-light leading-relaxed mb-8"
+          className="text-sm md:text-lg text-neutral-600 max-w-2xl font-light leading-relaxed mb-12"
         >
           Strategic PR, 360° marketing, and creative communications that cut
           through the noise and put your brand exactly where it belongs: in the
           spotlight.
         </motion.p>
 
-        {/* 4. DYNAMIC CASE STUDIES */}
-        <div className="w-full max-w-2xl mb-10 h-32 md:h-28 relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentCaseIndex}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.5 }}
-              className="absolute inset-0 flex flex-col items-center justify-center border-y border-neutral-200 py-4"
-            >
-              <p className="text-[10px] font-bold tracking-widest text-neutral-400 uppercase mb-2">
-                Case Studies That Speak Louder Than Words
-              </p>
-
-              {/* Highlight Text Scaled Down (text-lg md:text-2xl) */}
-              <h3 className="text-lg md:text-2xl font-bold text-red-600 mb-1">
-                {caseStudies[currentCaseIndex].highlight}
-              </h3>
-
-              <p className="text-xs text-neutral-600 font-medium px-4 md:px-0">
-                <span className="text-neutral-900 mr-2 block md:inline">
-                  {caseStudies[currentCaseIndex].category}
-                </span>
-                <span className="hidden md:inline text-neutral-400">|</span>
-                <span className="block md:inline mt-1 md:mt-0 md:ml-2 font-light italic">
-                  {caseStudies[currentCaseIndex].description}
-                </span>
-              </p>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* 5. BUTTONS & BLOG LINK */}
+        {/* 4. BUTTONS & BLOG LINK */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-col items-center gap-4 pb-12 md:pb-0"
+          className="flex flex-col items-center gap-4"
         >
           <div className="flex flex-col md:flex-row items-center gap-6">
             <a
@@ -236,7 +170,7 @@ export default function Hero() {
             href="https://punchng.com/brazzpr-secures-75000-for-tech-startup/"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 text-xs font-mono text-neutral-400 hover:text-red-600 underline decoration-neutral-300 hover:decoration-red-600 underline-offset-4 transition-all"
+            className="mt-6 text-xs font-mono text-neutral-400 hover:text-red-600 underline decoration-neutral-300 hover:decoration-red-600 underline-offset-4 transition-all"
           >
             Read full case studies →
           </a>
