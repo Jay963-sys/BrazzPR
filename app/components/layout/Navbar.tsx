@@ -3,8 +3,15 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
-const navItems = [
+type NavItem = {
+  label: string;
+  action?: "about";
+  href?: string;
+};
+
+const navItems: NavItem[] = [
   { label: "About", action: "about" },
   { label: "Expertise", href: "#services" },
   { label: "Industries", href: "#industries" },
@@ -70,7 +77,7 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
       >
         <div className="mx-auto max-w-7xl px-6 flex items-center justify-between">
           {/* 1. Logo */}
-          <a
+          <Link
             href="#"
             onClick={(e) => handleScroll(e, "#")}
             className="relative z-50 group"
@@ -82,7 +89,7 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
               height={40}
               className="object-contain w-auto h-8 md:h-10 transition-opacity duration-300 hover:opacity-80"
             />
-          </a>
+          </Link>
 
           {/* 2. Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-10">
@@ -104,9 +111,9 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
               // STANDARD LINKS
               const isActive = activeSection === item.href;
               return (
-                <a
+                <Link
                   key={item.href}
-                  href={item.href}
+                  href={item.href!}
                   onClick={(e) => handleScroll(e, item.href!)}
                   className="relative group py-2"
                 >
@@ -127,7 +134,7 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
                       className="absolute -bottom-1 left-0 right-0 h-1 w-1 bg-red-600 rounded-full mx-auto"
                     />
                   )}
-                </a>
+                </Link>
               );
             })}
           </nav>
@@ -135,21 +142,21 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
           {/* 3. CTA & Mobile Toggle */}
           <div className="flex items-center gap-6 z-50">
             {/* Contact Button */}
-            <a
+            <Link
               href="#contact"
               onClick={(e) => handleScroll(e, "#contact")}
               className="hidden md:inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-red-600 text-xs font-bold uppercase tracking-widest text-white hover:bg-red-700 transition-all duration-300 shadow-md shadow-red-600/20"
             >
               Contact Us
-            </a>
+            </Link>
 
             {/* Blog Link - Added Just After Contact Button */}
-            <a
+            <Link
               href="/blog"
               className="hidden md:inline-block text-xs font-bold uppercase tracking-widest text-neutral-900 hover:text-red-600 transition-colors"
             >
               Blog
-            </a>
+            </Link>
 
             {/* Mobile Hamburger */}
             <button
@@ -216,8 +223,8 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
                       </span>
                     </button>
                   ) : (
-                    <a
-                      href={item.href}
+                    <Link
+                      href={item.href!}
                       onClick={(e) => handleScroll(e, item.href!)}
                       className="group flex items-baseline gap-4"
                     >
@@ -227,7 +234,7 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
                       <span className="text-5xl font-serif font-medium text-neutral-900 group-hover:text-red-600 group-hover:italic transition-all">
                         {item.label}
                       </span>
-                    </a>
+                    </Link>
                   )}
                 </motion.div>
               ))}
@@ -238,21 +245,21 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
                 transition={{ delay: 0.5 }}
                 className="mt-8 pt-8 border-t border-neutral-200 flex flex-col gap-4"
               >
-                <a
+                <Link
                   href="#contact"
                   onClick={(e) => handleScroll(e, "#contact")}
                   className="text-xl font-medium text-neutral-500 hover:text-red-600 transition-colors flex items-center gap-2"
                 >
                   Contact Us <span className="text-red-600">→</span>
-                </a>
+                </Link>
 
                 {/* Mobile Blog Link */}
-                <a
+                <Link
                   href="/blog"
                   className="text-xl font-medium text-neutral-500 hover:text-red-600 transition-colors flex items-center gap-2"
                 >
                   Read our Blog <span className="text-red-600">→</span>
-                </a>
+                </Link>
               </motion.div>
             </nav>
           </motion.div>
