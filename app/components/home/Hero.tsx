@@ -165,15 +165,6 @@ export default function Hero() {
               </span>
             </a>
           </div>
-
-          <a
-            href="https://punchng.com/brazzpr-secures-75000-for-tech-startup/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 text-xs font-mono text-neutral-400 hover:text-red-600 underline decoration-neutral-300 hover:decoration-red-600 underline-offset-4 transition-all"
-          >
-            Read full case studies →
-          </a>
         </motion.div>
       </div>
 

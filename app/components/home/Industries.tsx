@@ -2,15 +2,17 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
+// Case Studies Data
 // Case Studies Data
 const caseStudies = [
   {
     id: 1,
     title: "Young Jonn",
     category: "UGC & Influencer Marketing",
-    desc: "Driving viral trends for hits like Normally, Xtracool, and Aquafina.",
-    stats: "3M+ TikTok Videos · 200M+ Impressions",
+    desc: "Songs: Normally, Xtracool, Currency Ft Olamide, Aquafina, Sokoto, Dada.",
+    stats: "3M+ TikTok videos ·   Over 200M+ impressions generated",
     images: ["/cases/y1.jpg"],
     color: "from-blue-900/80 to-slate-900/80",
   },
@@ -18,35 +20,39 @@ const caseStudies = [
     id: 2,
     title: "Blaqbonez",
     category: "Album Marketing",
-    desc: "Strategic rollout for 'Young Preacher' and 'Emeka Must Shine' albums.",
-    stats: "205M+ Streams · 766k Daily Avg",
+    desc: "Young Preacher Album, Emeka Must Shine Album",
+    stats:
+      "Averagely 766,000 streams daily after release · Emeka Must Shine - 205 Million streams across all platforms",
     images: ["/cases/b1.jpg"],
     color: "from-neutral-900/80 to-stone-900/80",
   },
   {
     id: 3,
     title: "Wrkman",
-    category: "Tech Startup Launch",
+    category: "Influencers, Storytellers and Blogs Engagement",
     desc: "Rapid user acquisition through storytelling and blog engagement.",
-    stats: "10k Users in 2 Mins · $75k Raised",
+    stats:
+      "Over 10,000 new users Acquired in two minutes · $75K Pre-seed funding raised",
     images: ["/cases/w1.png"],
     color: "from-orange-900/80 to-red-900/80",
+    link: "https://punchng.com/brazzpr-secures-75000-for-tech-startup/", // external link
   },
   {
     id: 4,
     title: "Next Afrobeats Star",
-    category: "Reality TV Partnership",
-    desc: "Influencer marketing and competitor onboarding for Ultima & MTN.",
-    stats: "40M+ Impressions · 1k+ Entries",
+    category: "Influencer marketing campaign and Competitors Onboarding",
+    desc: "Ultima | Onerpm | MTN",
+    stats:
+      "40M+ Impressions across social media · Over 1,000 entries via university influencers leverage",
     images: ["/cases/n1.jpg", "/cases/n2.png"],
     color: "from-yellow-900/80 to-amber-900/80",
   },
   {
     id: 5,
     title: "Itel Mobile",
-    category: "Events & Activation",
-    desc: "Mobilizing thousands of youths for the Itel 3X Superstar concert.",
-    stats: "4,000+ Youths Mobilized · Viral Reach",
+    category: "Itel 3X Superstar X Olamide",
+    desc: "Mobilized over 3000 youths across Universities and Lagos at large to attend. Managed post event amplification across blogs. Mobilized over 1000 youths across UNILAG, Yabatech, FCE and Laspotech at large to attend.",
+    stats: "",
     images: [
       "/cases/i2.jpg",
       "/cases/i1.jpg",
@@ -58,9 +64,9 @@ const caseStudies = [
   {
     id: 6,
     title: "Sterling Bank",
-    category: "Corporate Events",
-    desc: "ICreate Skills Fest: Empowering artisans and youths across 3 days.",
-    stats: "7,000+ Attendees · National PR",
+    category: "ICreate Skills Fest",
+    desc: "Mobilized over 7000 youths and artisans for 3 days across to attend. Managed post event amplification across blogs.",
+    stats: "",
     images: [
       "/cases/s1.jpg",
       "/cases/s2.jpg",
@@ -73,9 +79,10 @@ const caseStudies = [
   {
     id: 7,
     title: "Joeboy",
-    category: "Concert PR",
-    desc: "Lavida Experience: Billboard publicity and youth mobilization.",
-    stats: "2,000+ Attendees · Sold Out",
+    category: "Lavida Experience",
+    desc: "Young Legend",
+    stats:
+      "Over 2,000 in attendance · Managed Billboard, online publicity, Youth Mobilization",
     images: [
       "/cases/j1.jpg",
       "/cases/j2.jpg",
@@ -209,6 +216,23 @@ export default function CaseStudies() {
                           </span>
                           <span className="ml-auto text-white text-xl">→</span>
                         </div>
+                        {item.link && (
+                          <Link
+                            href={item.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="
+      inline-flex items-center gap-2 mt-4
+      text-sm font-semibold text-white
+      underline underline-offset-4
+      hover:text-red-400 transition-colors
+    "
+                          >
+                            Read full story
+                            <span className="text-lg">→</span>
+                          </Link>
+                        )}
                       </motion.div>
                     )}
                   </AnimatePresence>
