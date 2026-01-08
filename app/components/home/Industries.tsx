@@ -5,14 +5,13 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // Case Studies Data
-// Case Studies Data
 const caseStudies = [
   {
     id: 1,
     title: "Young Jonn",
     category: "UGC & Influencer Marketing",
     desc: "Songs: Normally, Xtracool, Currency Ft Olamide, Aquafina, Sokoto, Dada.",
-    stats: "3M+ TikTok videos ·   Over 200M+ impressions generated",
+    stats: "3M+ TikTok videos · Over 200M+ impressions generated",
     images: ["/cases/y1.jpg"],
     color: "from-blue-900/80 to-slate-900/80",
   },
@@ -35,7 +34,7 @@ const caseStudies = [
       "Over 10,000 new users Acquired in two minutes · $75K Pre-seed funding raised",
     images: ["/cases/w1.png"],
     color: "from-orange-900/80 to-red-900/80",
-    link: "https://punchng.com/brazzpr-secures-75000-for-tech-startup/", // external link
+    link: "https://punchng.com/brazzpr-secures-75000-for-tech-startup/",
   },
   {
     id: 4,
@@ -178,7 +177,7 @@ export default function CaseStudies() {
 
                 {/* Content */}
                 <div className="absolute inset-0 p-5 sm:p-8 flex flex-col justify-end bg-black/50 md:bg-transparent">
-                  {/* FIXED: Desktop vertical title (no clipping) */}
+                  {/* Desktop vertical title */}
                   {!isActive && (
                     <div className="hidden md:block absolute inset-0 overflow-visible pointer-events-none">
                       <div className="absolute top-1/2 left-10 -translate-y-1/2 origin-left -rotate-90">
@@ -210,24 +209,25 @@ export default function CaseStudies() {
                           {item.desc}
                         </p>
 
-                        <div className="hidden sm:flex items-center gap-4 border-t border-white/20 pt-4">
-                          <span className="text-xs font-mono text-white/80 uppercase tracking-wider">
-                            {item.stats}
-                          </span>
-                          <span className="ml-auto text-white text-xl">→</span>
-                        </div>
+                        {/* Fixed: Always render stats container, hide only if empty */}
+                        {item.stats && (
+                          <div className="flex items-center gap-4 border-t border-white/20 pt-4">
+                            <span className="text-xs font-mono text-white/80 uppercase tracking-wider">
+                              {item.stats}
+                            </span>
+                            <span className="ml-auto text-white text-xl">
+                              →
+                            </span>
+                          </div>
+                        )}
+
                         {item.link && (
                           <Link
                             href={item.link}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
-                            className="
-      inline-flex items-center gap-2 mt-4
-      text-sm font-semibold text-white
-      underline underline-offset-4
-      hover:text-red-400 transition-colors
-    "
+                            className="inline-flex items-center gap-2 mt-4 text-sm font-semibold text-white underline underline-offset-4 hover:text-red-400 transition-colors"
                           >
                             Read full story
                             <span className="text-lg">→</span>
