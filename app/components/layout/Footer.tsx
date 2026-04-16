@@ -201,7 +201,7 @@ export default function Footer({ onOpenAbout }: FooterProps) {
             </a>
             {/* The Dot Separator */}
             <div className="w-1 h-1 rounded-full bg-neutral-800" />
-            {/* JAY'S CREDIT */}
+            {/* JAY'S CREDIT 
             <Link
               href="https://jay-dev-portfolio.vercel.app/"
               target="_blank"
@@ -217,7 +217,7 @@ export default function Footer({ onOpenAbout }: FooterProps) {
   "
             >
               Designed by Jay
-            </Link>
+            </Link>*/}
           </div>
         </div>
       </div>

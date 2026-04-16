@@ -5,10 +5,8 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
-// ISR
 export const revalidate = 60;
 
-// Fetch single post (SAFE)
 async function getPost(slug: string) {
   const query = `*[
     _type == "post" &&
@@ -28,7 +26,6 @@ export default async function BlogPost({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  // ✅ REQUIRED in Next 15
   const { slug } = await params;
 
   const post = await getPost(slug);
@@ -76,7 +73,6 @@ export default async function BlogPost({
           <PortableText
             value={post.body}
             components={{
-              // 1. CUSTOM IMAGE HANDLING
               types: {
                 image: ({ value }) => (
                   <div className="relative h-96 w-full my-10 rounded-lg overflow-hidden bg-neutral-100">
@@ -89,7 +85,6 @@ export default async function BlogPost({
                   </div>
                 ),
               },
-              // 2. TEXT BLOCKS (Crucial for visibility)
               block: {
                 normal: ({ children }) => (
                   <p className="text-lg text-neutral-800 leading-relaxed mb-6 font-light">
@@ -117,7 +112,6 @@ export default async function BlogPost({
                   </blockquote>
                 ),
               },
-              // 3. LISTS
               list: {
                 bullet: ({ children }) => (
                   <ul className="list-disc ml-6 mb-6 text-lg text-neutral-800 space-y-2 marker:text-red-600">
@@ -130,7 +124,6 @@ export default async function BlogPost({
                   </ol>
                 ),
               },
-              // 4. LINKS
               marks: {
                 link: ({ children, value }) => {
                   return (
