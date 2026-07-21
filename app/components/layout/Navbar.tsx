@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation"; // 1. Imported usePathname
 
 type NavItem = {
   label: string;
@@ -22,6 +23,7 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const pathname = usePathname(); // 2. Initialize the hook
 
   // Handle Scroll Effect for background
   useEffect(() => {
@@ -39,10 +41,15 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
     }
   }, [open]);
 
+  // 3. Automatically close the mobile menu when the route (pathname) changes
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
   // Smooth Scroll Handler
   const handleScroll = (
     e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
+    href: string,
   ) => {
     e.preventDefault();
     setOpen(false); // Close mobile menu if open
@@ -253,9 +260,10 @@ export default function Navbar({ onOpenAbout }: { onOpenAbout: () => void }) {
                   Contact Us <span className="text-red-600">→</span>
                 </Link>
 
-                {/* Mobile Blog Link */}
+                {/* Mobile Blog Link - 4. Added onClick handler here as well for instant feedback */}
                 <Link
                   href="/blog"
+                  onClick={() => setOpen(false)}
                   className="text-xl font-medium text-neutral-500 hover:text-red-600 transition-colors flex items-center gap-2"
                 >
                   Read our Blog <span className="text-red-600">→</span>
