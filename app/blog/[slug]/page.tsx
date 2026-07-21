@@ -1,9 +1,12 @@
+// app/blog/[slug]/page.tsx
+
 import { client } from "../../../sanity/lib/client";
 import { urlFor as urlForImage } from "../../../sanity/lib/image";
 import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import ShareButton from "../../components/ShareButton";
 
 export const revalidate = 60;
 
@@ -45,14 +48,18 @@ export default async function BlogPost({
           ← Back to Blog
         </Link>
 
-        {/* Title & Date */}
+        {/* Title */}
         <h1 className="text-4xl md:text-6xl font-bold text-neutral-900 mb-6 leading-tight">
           {post.title}
         </h1>
 
-        <p className="text-neutral-400 font-mono text-sm mb-10 border-b border-neutral-200 pb-8">
-          Published on {new Date(post.publishedAt).toDateString()}
-        </p>
+        {/* Date & Share Button Wrapper */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-10 border-b border-neutral-200 pb-8">
+          <p className="text-neutral-400 font-mono text-sm">
+            Published on {new Date(post.publishedAt).toDateString()}
+          </p>
+          <ShareButton title={post.title} />
+        </div>
 
         {/* Main Image */}
         {post.mainImage && (

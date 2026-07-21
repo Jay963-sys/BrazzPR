@@ -8,6 +8,24 @@ import Link from "next/link";
 const caseStudies = [
   {
     id: 1,
+    title: "Kora",
+    category: "African Creators Campaign",
+    desc: "Campaign executed across: Nigeria, South Africa, Ghana, Kenya, and Ivory Coast.",
+    stats: "Over 10M+ Impressions generated",
+    images: ["/cases/k1.jpg"],
+    color: "from-emerald-900/80 to-teal-900/80",
+  },
+  {
+    id: 2,
+    title: "Bayse",
+    category: "Transit OOH Advertising",
+    desc: "FLM Buses Branding Across Lagos.",
+    stats: "250 Buses Branded, Over 13M+ Impressions generated",
+    images: ["/cases/ba1.jpg", "/cases/ba2.jpg"],
+    color: "from-cyan-900/80 to-blue-900/80",
+  },
+  {
+    id: 3,
     title: "Young Jonn",
     category: "UGC & Influencer Marketing",
     desc: "Songs: Normally, Xtracool, Currency Ft Olamide, Aquafina, Sokoto, Dada.",
@@ -16,7 +34,7 @@ const caseStudies = [
     color: "from-blue-900/80 to-slate-900/80",
   },
   {
-    id: 2,
+    id: 4,
     title: "Blaqbonez",
     category: "Album Marketing",
     desc: "Young Preacher Album, Emeka Must Shine Album",
@@ -26,7 +44,7 @@ const caseStudies = [
     color: "from-neutral-900/80 to-stone-900/80",
   },
   {
-    id: 3,
+    id: 5,
     title: "Wrkman",
     category: "Influencers, Storytellers and Blogs Engagement",
     desc: "Rapid user acquisition through storytelling and blog engagement.",
@@ -37,7 +55,7 @@ const caseStudies = [
     link: "https://punchng.com/brazzpr-secures-75000-for-tech-startup/",
   },
   {
-    id: 4,
+    id: 6,
     title: "Next Afrobeats Star",
     category: "Influencer marketing campaign and Competitors Onboarding",
     desc: "Ultima | Onerpm | MTN",
@@ -47,7 +65,7 @@ const caseStudies = [
     color: "from-yellow-900/80 to-amber-900/80",
   },
   {
-    id: 5,
+    id: 7,
     title: "Itel Mobile",
     category: "Itel 3X Superstar X Olamide",
     desc: "Mobilized over 3000 youths across Universities and Lagos at large to attend. Managed post event amplification across blogs. Mobilized over 1000 youths across UNILAG, Yabatech, FCE and Laspotech at large to attend.",
@@ -61,7 +79,7 @@ const caseStudies = [
     color: "from-red-900/80 to-pink-900/80",
   },
   {
-    id: 6,
+    id: 8,
     title: "Sterling Bank",
     category: "ICreate Skills Fest",
     desc: "Mobilized over 7000 youths and artisans for 3 days across to attend. Managed post event amplification across blogs.",
@@ -76,7 +94,7 @@ const caseStudies = [
     color: "from-gray-900/80 to-slate-900/80",
   },
   {
-    id: 7,
+    id: 9,
     title: "Joeboy",
     category: "Lavida Experience",
     desc: "Young Legend",

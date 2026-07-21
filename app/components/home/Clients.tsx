@@ -27,6 +27,9 @@ const logos = [
   "/clients/22.png",
   "/clients/23.svg",
   "/clients/24.png",
+  "/clients/25.png",
+  "/clients/26.png",
+  "/clients/27.png",
 ];
 
 const impacts = [

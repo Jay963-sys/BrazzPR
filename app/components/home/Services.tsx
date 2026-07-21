@@ -44,9 +44,10 @@ const services = [
     description:
       "We leverage traditional channels to drive mass awareness and credibility in ways digital sometimes can't.",
     features: [
+      "OOH (Out of Home) advertising; Billboards, Road & Transit vehicles (Buses & Inflights). ",
       "TV & Radio commercial production and placement",
-      "Billboard & OOH (Out of Home) advertising",
       "Print media campaigns (Magazines, Newspapers)",
+      "BTL(Below the Line) Experiential Marketing and activations",
       "Direct marketing activations",
       "Media buying and negotiation",
     ],
@@ -306,7 +307,7 @@ export default function Services() {
             The 'download' attribute ensures the file is downloaded rather than opened.
           */}
           <a
-            href="/BrazzPRProfile.pdf"
+            href="/BrazzPR and Comms Company Profile.pdf"
             download="BrazzPR and Comms Company Profile.pdf"
             className="group relative px-10 py-5 bg-neutral-900 text-white overflow-hidden rounded-full shadow-xl hover:shadow-2xl transition-all duration-300"
           >
