@@ -1,0 +1,430 @@
+From dc711980de5bc332b0bb904a8ac00d70e131b797 Mon Sep 17 00:00:00 2001
+From: Toby <fagbemiadeshina@gmail.com>
+Date: Mon, 16 Nov 2026 16:32:35 +0100
+Subject: [PATCH] Add Meta Pixel with cookie consent, Contact tracking and
+ privacy page
+
+- Meta Pixel (1471038278456184) loads only after cookie consent
+- PageView on every client-side navigation
+- Cookie banner (Accept/Decline) linking to the privacy policy
+- Contact event on Start Your Project / Strategy Call / email links
+- /privacy page from the approved draft; footer link points to it
+
+---
+ app/components/consent/CookieBanner.tsx |  56 +++++++++
+ app/components/consent/MetaPixel.tsx    |  53 +++++++++
+ app/components/home/CTA.tsx             |   5 +
+ app/components/layout/Footer.tsx        |   4 +-
+ app/layout.tsx                          |   4 +
+ app/lib/pixel.ts                        |  41 +++++++
+ app/privacy/page.tsx                    | 145 ++++++++++++++++++++++++
+ 7 files changed, 306 insertions(+), 2 deletions(-)
+ create mode 100644 app/components/consent/CookieBanner.tsx
+ create mode 100644 app/components/consent/MetaPixel.tsx
+ create mode 100644 app/lib/pixel.ts
+ create mode 100644 app/privacy/page.tsx
+
+diff --git a/app/components/consent/CookieBanner.tsx b/app/components/consent/CookieBanner.tsx
+new file mode 100644
+index 0000000..bb1f612
+--- /dev/null
++++ b/app/components/consent/CookieBanner.tsx
+@@ -0,0 +1,56 @@
++"use client";
++
++import Link from "next/link";
++import { useEffect, useState } from "react";
++import { getConsent, setConsent } from "../../lib/pixel";
++
++export default function CookieBanner() {
++  const [open, setOpen] = useState(false);
++
++  useEffect(() => {
++    setOpen(getConsent() === null);
++  }, []);
++
++  if (!open) return null;
++
++  const choose = (value: "granted" | "denied") => {
++    setConsent(value);
++    setOpen(false);
++  };
++
++  return (
++    <div
++      role="dialog"
++      aria-live="polite"
++      aria-label="Cookie consent"
++      className="fixed inset-x-0 bottom-0 z-[60] p-4 md:p-6"
++    >
++      <div className="mx-auto max-w-3xl bg-[#111] text-white border border-white/10 shadow-2xl p-5 md:p-6 flex flex-col md:flex-row md:items-center gap-4">
++        <p className="text-sm text-neutral-300 leading-relaxed flex-1">
++          We use cookies, including the Meta Pixel, to measure and improve our
++          advertising. You can accept or decline. See our{" "}
++          <Link href="/privacy" className="underline underline-offset-4 hover:text-white">
++            Privacy Policy
++          </Link>
++          .
++        </p>
++        <div className="flex gap-3 shrink-0">
++          <button
++            type="button"
++            onClick={() => choose("denied")}
++            className="px-5 py-2.5 text-xs font-bold uppercase tracking-widest border border-white/20 hover:border-white transition-colors"
++          >
++            Decline
++          </button>
++          <button
++            type="button"
++            onClick={() => choose("granted")}
++            className="px-5 py-2.5 text-xs font-bold uppercase tracking-widest bg-red-600 hover:bg-red-700 transition-colors"
++          >
++            Accept
++          </button>
++        </div>
++      </div>
++    </div>
++  );
++}
+diff --git a/app/components/consent/MetaPixel.tsx b/app/components/consent/MetaPixel.tsx
+new file mode 100644
+index 0000000..5854b82
+--- /dev/null
++++ b/app/components/consent/MetaPixel.tsx
+@@ -0,0 +1,53 @@
++"use client";
++
++import Script from "next/script";
++import { usePathname } from "next/navigation";
++import { useEffect, useRef, useState } from "react";
++import {
++  CONSENT_EVENT,
++  META_PIXEL_ID,
++  getConsent,
++  type Consent,
++} from "../../lib/pixel";
++
++/**
++ * Loads the Meta Pixel only once the visitor has accepted cookies
++ * (NDPA 2023 / UK GDPR), and records a PageView on every client-side
++ * navigation, not just the first page load.
++ */
++export default function MetaPixel() {
++  const [consent, setConsentState] = useState<Consent | null>(null);
++  const pathname = usePathname();
++  const firstView = useRef(true);
++
++  useEffect(() => {
++    setConsentState(getConsent());
++    const onChange = (e: Event) =>
++      setConsentState((e as CustomEvent<Consent>).detail);
++    window.addEventListener(CONSENT_EVENT, onChange);
++    return () => window.removeEventListener(CONSENT_EVENT, onChange);
++  }, []);
++
++  // The init snippet fires the first PageView; later route changes need one each.
++  useEffect(() => {
++    if (consent !== "granted") return;
++    if (firstView.current) {
++      firstView.current = false;
++      return;
++    }
++    window.fbq?.("track", "PageView");
++  }, [pathname, consent]);
++
++  if (consent !== "granted") return null;
++
++  return (
++    <Script id="meta-pixel" strategy="afterInteractive">{`
++!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
++n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
++n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
++t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
++document,'script','https://connect.facebook.net/en_US/fbevents.js');
++fbq('init','${META_PIXEL_ID}');fbq('track','PageView');
++`}</Script>
++  );
++}
+diff --git a/app/components/home/CTA.tsx b/app/components/home/CTA.tsx
+index 03ee9bc..91a0016 100644
+--- a/app/components/home/CTA.tsx
++++ b/app/components/home/CTA.tsx
+@@ -1,6 +1,7 @@
+ "use client";
+ 
+ import { motion } from "framer-motion";
++import { trackEvent } from "../../lib/pixel";
+ 
+ export default function CTA() {
+   return (
+@@ -46,6 +47,7 @@ export default function CTA() {
+             {/* CTA 1: Start Your Project (Email) */}
+             <a
+               href="mailto:hello@brazzprandcomms.com"
++              onClick={() => trackEvent("Contact", { method: "email" })}
+               className="group relative inline-flex items-center justify-center px-10 py-5 overflow-hidden font-bold text-white transition-all duration-300 bg-red-600 hover:bg-red-700 min-w-[240px] shadow-lg shadow-red-600/30"
+             >
+               <span className="relative uppercase tracking-widest text-sm">
+@@ -69,6 +71,7 @@ export default function CTA() {
+             {/* CTA 2: Book Strategy Call (Phone) */}
+             <a
+               href="tel:+2348098546762"
++              onClick={() => trackEvent("Contact", { method: "phone" })}
+               className="group relative inline-flex items-center justify-center px-10 py-5 overflow-hidden font-bold text-neutral-900 transition-all duration-300 bg-white border border-neutral-200 hover:border-red-600 min-w-[240px]"
+             >
+               <span className="relative uppercase tracking-widest text-sm group-hover:text-red-600 transition-colors">
+@@ -88,6 +91,7 @@ export default function CTA() {
+             {/* Custom Plan Link */}
+             <a
+               href="mailto:hello@brazzprandcomms.com?subject=Requesting%20Custom%20Plan"
++              onClick={() => trackEvent("Contact", { method: "email" })}
+               className="text-sm font-medium text-neutral-500 uppercase tracking-wider hover:text-red-600 transition-colors"
+             >
+               Request a Custom PR & Marketing Plan
+@@ -103,6 +107,7 @@ export default function CTA() {
+               </span>
+               <a
+                 href="mailto:hello@brazzprandcomms.com"
++              onClick={() => trackEvent("Contact", { method: "email" })}
+                 className="text-xl md:text-3xl font-serif italic text-neutral-900 border-b border-transparent hover:border-red-600 hover:text-red-600 transition-all duration-300"
+               >
+                 hello@brazzprandcomms.com
+diff --git a/app/components/layout/Footer.tsx b/app/components/layout/Footer.tsx
+index b1d066b..a791ed6 100644
+--- a/app/components/layout/Footer.tsx
++++ b/app/components/layout/Footer.tsx
+@@ -193,9 +193,9 @@ export default function Footer({ onOpenAbout }: FooterProps) {
+         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-600">
+           <p>© {new Date().getFullYear()} BrazzPR. All rights reserved.</p>
+           <div className="flex items-center gap-6">
+-            <a href="#" className="hover:text-neutral-400 transition-colors">
++            <Link href="/privacy" className="hover:text-neutral-400 transition-colors">
+               Privacy Policy
+-            </a>
++            </Link>
+             <a href="#" className="hover:text-neutral-400 transition-colors">
+               Terms of Service
+             </a>
+diff --git a/app/layout.tsx b/app/layout.tsx
+index 1a61427..c5c4c40 100644
+--- a/app/layout.tsx
++++ b/app/layout.tsx
+@@ -4,6 +4,8 @@ import localFont from "next/font/local";
+ import { ToastContainer } from "react-toastify";
+ import "react-toastify/dist/ReactToastify.css";
+ import { Inter } from "next/font/google";
++import MetaPixel from "./components/consent/MetaPixel";
++import CookieBanner from "./components/consent/CookieBanner";
+ 
+ const geistSans = localFont({
+   src: "./fonts/GeistVF.woff",
+@@ -87,6 +89,8 @@ export default function RootLayout({
+           theme="colored"
+         />
+         {children}
++        <CookieBanner />
++        <MetaPixel />
+       </body>
+     </html>
+   );
+diff --git a/app/lib/pixel.ts b/app/lib/pixel.ts
+new file mode 100644
+index 0000000..ff4e9ea
+--- /dev/null
++++ b/app/lib/pixel.ts
+@@ -0,0 +1,41 @@
++// Meta Pixel helpers. The pixel only loads after the visitor accepts cookies
++// (see components/consent), so every call here is a safe no-op until then.
++
++export const META_PIXEL_ID = "1471038278456184";
++
++export const CONSENT_KEY = "brazz-cookie-consent";
++export const CONSENT_EVENT = "brazz-consent-change";
++
++export type Consent = "granted" | "denied";
++
++type Fbq = (...args: unknown[]) => void;
++
++declare global {
++  interface Window {
++    fbq?: Fbq;
++  }
++}
++
++export function getConsent(): Consent | null {
++  try {
++    const v = localStorage.getItem(CONSENT_KEY);
++    return v === "granted" || v === "denied" ? v : null;
++  } catch {
++    return null;
++  }
++}
++
++export function setConsent(value: Consent) {
++  try {
++    localStorage.setItem(CONSENT_KEY, value);
++  } catch {
++    /* storage blocked — banner will simply show again next visit */
++  }
++  window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: value }));
++}
++
++/** Fire a standard Meta event, e.g. trackEvent("Contact", { method: "email" }). */
++export function trackEvent(name: string, params?: Record<string, unknown>) {
++  if (typeof window === "undefined" || !window.fbq) return;
++  window.fbq("track", name, params);
++}
+diff --git a/app/privacy/page.tsx b/app/privacy/page.tsx
+new file mode 100644
+index 0000000..376ffe3
+--- /dev/null
++++ b/app/privacy/page.tsx
+@@ -0,0 +1,145 @@
++import type { Metadata } from "next";
++import Link from "next/link";
++
++export const metadata: Metadata = {
++  title: "Privacy Policy",
++  description:
++    "How BrazzPR and Comms collects and uses personal data from our advertising, website and enquiries.",
++};
++
++const H2 = ({ children }: { children: React.ReactNode }) => (
++  <h2 className="text-xl md:text-2xl font-bold text-white mt-12 mb-4">
++    {children}
++  </h2>
++);
++
++const A = ({ href, children }: { href: string; children: React.ReactNode }) => (
++  <a
++    href={href}
++    className="text-white underline underline-offset-4 decoration-neutral-600 hover:decoration-red-600"
++  >
++    {children}
++  </a>
++);
++
++export default function PrivacyPage() {
++  return (
++    <main className="bg-[#050505] min-h-screen text-neutral-300">
++      <div className="mx-auto max-w-3xl px-6 py-20 md:py-28 leading-relaxed text-[15px]">
++        <Link
++          href="/"
++          className="inline-block text-xs uppercase tracking-[0.2em] text-neutral-500 hover:text-white transition-colors mb-12"
++        >
++          ← Back to home
++        </Link>
++
++        <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
++          Privacy Policy – BrazzPR and Comms
++        </h1>
++        <p className="mb-6">
++          <strong className="text-white">Last updated:</strong> 16 November 2026
++        </p>
++        <p>
++          BrazzPR and Comms (&quot;we&quot;, &quot;us&quot;) is a public
++          relations and communications business based in Nigeria. This policy
++          explains what personal data we collect when you see or respond to our
++          advertising on Facebook and Instagram, or contact us, and how we use
++          it. We follow the Nigeria Data Protection Act 2023.
++        </p>
++
++        <H2>1. Who is responsible</H2>
++        <p>
++          BrazzPR and Comms, Nigeria. Contact for privacy questions:{" "}
++          <A href="mailto:temibrazzmediahouse@gmail.com">
++            temibrazzmediahouse@gmail.com
++          </A>
++        </p>
++
++        <H2>2. What data we collect</H2>
++        <ul className="list-disc pl-6 space-y-3">
++          <li>
++            <strong className="text-white">Data you give us:</strong> your name,
++            phone number, email address and the content of messages you send us
++            on Facebook, Instagram, WhatsApp or by email.
++          </li>
++          <li>
++            <strong className="text-white">Advertising data from Meta:</strong>{" "}
++            when you see or interact with our ads, Meta Platforms provides us
++            with aggregated reports (for example reach, clicks and results).
++            These reports do not identify you personally.
++          </li>
++          <li>
++            <strong className="text-white">
++              Website and pixel data (if we use a website):
++            </strong>{" "}
++            if we run a website with the Meta Pixel, it may record pages you
++            visit and actions you take (such as submitting a form) to measure
++            and improve our ads.
++          </li>
++        </ul>
++
++        <H2>3. Why we use it</H2>
++        <ul className="list-disc pl-6 space-y-3">
++          <li>To reply to your enquiries and provide our services.</li>
++          <li>
++            To measure how well our advertising works and to show our ads to
++            people likely to be interested.
++          </li>
++          <li>To meet legal and accounting obligations.</li>
++        </ul>
++        <p className="mt-4">
++          Our legal bases are your consent, the steps needed to provide a
++          service you asked for, and our legitimate interest in promoting our
++          business.
++        </p>
++
++        <H2>4. Who we share it with</H2>
++        <p>
++          We do not sell your personal data. We use Meta Platforms (Facebook,
++          Instagram, WhatsApp) to run and measure our ads and to communicate
++          with you; their own privacy policy applies to data they process:{" "}
++          <A href="https://www.facebook.com/privacy/policy">
++            https://www.facebook.com/privacy/policy
++          </A>
++          . We may share data with authorities where the law requires it.
++        </p>
++
++        <H2>5. How long we keep it</H2>
++        <p>
++          We keep enquiry and customer data for as long as needed to serve you
++          and to meet legal obligations, and then delete it. Advertising
++          reports are kept in aggregated form.
++        </p>
++
++        <H2>6. Your rights</H2>
++        <p>
++          You can ask us to access, correct or delete your personal data,
++          withdraw consent, or object to its use for marketing. Email{" "}
++          <A href="mailto:moshgbotemi@gmail.com">moshgbotemi@gmail.com</A> and
++          we will reply within 30 days. You may also complain to the Nigeria
++          Data Protection Commission (
++          <A href="https://ndpc.gov.ng">ndpc.gov.ng</A>).
++        </p>
++
++        <H2>7. Ad preferences</H2>
++        <p>
++          You can control the ads you see on Facebook and Instagram in your
++          Meta Accounts Center under &quot;Ad preferences&quot;.
++        </p>
++
++        <H2>8. Data deletion</H2>
++        <p>
++          To have your data deleted, email{" "}
++          <A href="mailto:temibrazzmediahouse@gmail.com?subject=Delete%20my%20data">
++            temibrazzmediahouse@gmail.com
++          </A>{" "}
++          with the subject &quot;Delete my data&quot;. We will confirm when it
++          is done.
++        </p>
++
++        <H2>9. Changes</H2>
++        <p>We may update this policy. The date at the top shows the latest version.</p>
++      </div>
++    </main>
++  );
++}
+-- 
+2.43.0
+

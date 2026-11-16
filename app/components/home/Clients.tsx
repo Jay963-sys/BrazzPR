@@ -30,6 +30,7 @@ const logos = [
   "/clients/25.png",
   "/clients/26.png",
   "/clients/27.png",
+  "/clients/28.png",
 ];
 
 const impacts = [
