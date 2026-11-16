@@ -4,6 +4,8 @@ import localFont from "next/font/local";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Inter } from "next/font/google";
+import MetaPixel from "./components/consent/MetaPixel";
+import CookieBanner from "./components/consent/CookieBanner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -87,6 +89,8 @@ export default function RootLayout({
           theme="colored"
         />
         {children}
+        <CookieBanner />
+        <MetaPixel />
       </body>
     </html>
   );

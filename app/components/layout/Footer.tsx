@@ -193,9 +193,9 @@ export default function Footer({ onOpenAbout }: FooterProps) {
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-600">
           <p>© {new Date().getFullYear()} BrazzPR. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-neutral-400 transition-colors">
+            <Link href="/privacy" className="hover:text-neutral-400 transition-colors">
               Privacy Policy
-            </a>
+            </Link>
             <a href="#" className="hover:text-neutral-400 transition-colors">
               Terms of Service
             </a>

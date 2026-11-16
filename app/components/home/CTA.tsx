@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { trackEvent } from "../../lib/pixel";
 
 export default function CTA() {
   return (
@@ -46,6 +47,7 @@ export default function CTA() {
             {/* CTA 1: Start Your Project (Email) */}
             <a
               href="mailto:hello@brazzprandcomms.com"
+              onClick={() => trackEvent("Contact", { method: "email" })}
               className="group relative inline-flex items-center justify-center px-10 py-5 overflow-hidden font-bold text-white transition-all duration-300 bg-red-600 hover:bg-red-700 min-w-[240px] shadow-lg shadow-red-600/30"
             >
               <span className="relative uppercase tracking-widest text-sm">
@@ -69,6 +71,7 @@ export default function CTA() {
             {/* CTA 2: Book Strategy Call (Phone) */}
             <a
               href="tel:+2348098546762"
+              onClick={() => trackEvent("Contact", { method: "phone" })}
               className="group relative inline-flex items-center justify-center px-10 py-5 overflow-hidden font-bold text-neutral-900 transition-all duration-300 bg-white border border-neutral-200 hover:border-red-600 min-w-[240px]"
             >
               <span className="relative uppercase tracking-widest text-sm group-hover:text-red-600 transition-colors">
@@ -88,6 +91,7 @@ export default function CTA() {
             {/* Custom Plan Link */}
             <a
               href="mailto:hello@brazzprandcomms.com?subject=Requesting%20Custom%20Plan"
+              onClick={() => trackEvent("Contact", { method: "email" })}
               className="text-sm font-medium text-neutral-500 uppercase tracking-wider hover:text-red-600 transition-colors"
             >
               Request a Custom PR & Marketing Plan
@@ -103,6 +107,7 @@ export default function CTA() {
               </span>
               <a
                 href="mailto:hello@brazzprandcomms.com"
+              onClick={() => trackEvent("Contact", { method: "email" })}
                 className="text-xl md:text-3xl font-serif italic text-neutral-900 border-b border-transparent hover:border-red-600 hover:text-red-600 transition-all duration-300"
               >
                 hello@brazzprandcomms.com
